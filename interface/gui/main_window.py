@@ -271,6 +271,14 @@ class MainWindow(QMainWindow):
         # View Controls
         self.btn_center = QPushButton("Auto Center")
         self.btn_center.clicked.connect(lambda: self.node_graph.center_view())
+
+        self.btn_unlock = QPushButton("Unlock All")
+        self.btn_unlock.setToolTip("Unlock all nodes (Principle 5)")
+        self.btn_unlock.clicked.connect(lambda: self.node_graph.scene.unlock_all_nodes())
+
+        self.btn_reset = QPushButton("Reset Layout")
+        self.btn_reset.setToolTip("Reset all positions and auto-arrange (Principle 5)")
+        self.btn_reset.clicked.connect(self.reset_layout_flow)
         
         self.search_bar = QLineEdit()
         self.search_bar.setPlaceholderText("Filter Nodes (File/Func)...")
@@ -281,6 +289,8 @@ class MainWindow(QMainWindow):
         toolbar.addWidget(self.btn_run_graph)
         toolbar.addSpacing(20)
         toolbar.addWidget(self.btn_center)
+        toolbar.addWidget(self.btn_unlock)
+        toolbar.addWidget(self.btn_reset)
         toolbar.addWidget(self.search_bar)
         
         toolbar.addStretch()
@@ -675,6 +685,12 @@ class MainWindow(QMainWindow):
 
     # --- Vis Methods ---
     # Visualization methods removed as part of cleanup
+
+    def reset_layout_flow(self):
+        """Principle 5: Unlock all and re-layout"""
+        logger.info("Resetting layout: Unlocking all nodes and re-optimizing.")
+        self.node_graph.scene.unlock_all_nodes()
+        self.run_ai_layout_optimization()
 
     def run_ai_layout_optimization(self):
         logger.info("Starting AI Layout Optimization...")

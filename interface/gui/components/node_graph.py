@@ -136,6 +136,21 @@ class NodeGraphScene(QGraphicsScene):
         # 2. Native Clear (Fastest C++ implementation)
         # Removes all items from the BSP tree and deletes them
         self.clear()
+    
+    def unlock_all_nodes(self):
+        """Principle 5: Batch Unlock"""
+        for node in self.nodes:
+            if hasattr(node, "locked"):
+                node.locked = False
+                node.update()
+        logger.info("All nodes unlocked by user.")
+
+    def unlock_node(self, node):
+        """Principle 5: Unlock Single Node"""
+        if hasattr(node, "locked"):
+            node.locked = False
+            node.update()
+            logger.info(f"Node {node.title} unlocked.")
 
 
     def deserialize(self, data):
@@ -213,6 +228,13 @@ class NodeGraphWidget(QGraphicsView):
         # Draw Instructions Overlay
         painter.save()
         painter.setTransform(QTransform()) # Reset transform to draw in window coordinates
+        
+        # Principle 8: Empty Canvas Hint
+        if not self.scene.nodes:
+            painter.setPen(QColor(COLORS["text_dim"]))
+            painter.setFont(QFont("Segoe UI", 14))
+            viewport_rect = self.viewport().rect()
+            painter.drawText(viewport_rect, Qt.AlignmentFlag.AlignCenter, "Empty Canvas - Right Click to Add Node")
         
         instruction = "Mouse Wheel: Zoom | Middle/Left Drag: Pan | Right Click: Edit Params"
         

@@ -1,3 +1,3 @@
 @echo off
-python main.py
+python /Github/GVPA/main.py
 pause
