@@ -1,0 +1,50 @@
+2026-01-08 11:00:37,290 - GVPA - INFO - test_basic.py:20 - Test log message
+2026-01-08 11:08:03,715 - GVPA - INFO - project_manager.py:12 - Opened project: d:\Github\Eliza-test
+2026-01-08 11:08:38,838 - GVPA - INFO - project_manager.py:12 - Opened project: d:\Github\Eliza-test
+2026-01-08 11:09:04,048 - GVPA - INFO - project_manager.py:12 - Opened project: d:\Github\Eliza-test
+2026-01-08 23:28:28,550 - GVPA - INFO - code_graph_builder.py:17 - Starting graph layout generation...
+2026-01-08 23:28:28,551 - GVPA - INFO - code_graph_builder.py:38 - Added 2 nodes from analysis.
+2026-01-08 23:28:28,551 - GVPA - INFO - code_graph_builder.py:49 - Added 1 edges from analysis.
+2026-01-08 23:28:28,553 - GVPA - INFO - code_graph_builder.py:153 - Graph generation completed. Nodes: 2, Edges: 1
+2026-01-08 23:28:28,553 - GVPA - INFO - code_graph_builder.py:17 - Starting graph layout generation...
+2026-01-08 23:28:28,554 - GVPA - INFO - code_graph_builder.py:38 - Added 2 nodes from analysis.
+2026-01-08 23:28:28,554 - GVPA - INFO - code_graph_builder.py:49 - Added 2 edges from analysis.
+2026-01-08 23:28:28,726 - GVPA - INFO - code_graph_builder.py:153 - Graph generation completed. Nodes: 2, Edges: 2
+2026-01-08 23:28:28,727 - GVPA - INFO - code_graph_builder.py:17 - Starting graph layout generation...
+2026-01-08 23:28:28,727 - GVPA - WARNING - code_graph_builder.py:19 - Empty analysis result provided.
+2026-01-08 23:37:12,398 - GVPA - INFO - code_graph_builder.py:17 - Starting graph layout generation...
+2026-01-08 23:37:12,399 - GVPA - INFO - code_graph_builder.py:38 - Added 2 nodes from analysis.
+2026-01-08 23:37:12,399 - GVPA - INFO - code_graph_builder.py:51 - Added 1 edges from analysis.
+2026-01-08 23:37:12,399 - GVPA - INFO - code_graph_builder.py:156 - Graph generation completed. Nodes: 2, Edges: 1
+2026-01-08 23:43:20,738 - GVPA - INFO - code_graph_builder.py:17 - Starting graph layout generation...
+2026-01-08 23:43:20,739 - GVPA - INFO - code_graph_builder.py:41 - Added 2 nodes from analysis.
+2026-01-08 23:43:20,739 - GVPA - INFO - code_graph_builder.py:56 - Added 0 edges from analysis.
+2026-01-08 23:43:20,739 - GVPA - INFO - code_graph_builder.py:163 - Graph generation completed. Nodes: 2, Edges: 0
+2026-01-08 23:43:20,743 - GVPA - INFO - code_graph_builder.py:17 - Starting graph layout generation...
+2026-01-08 23:43:20,743 - GVPA - INFO - code_graph_builder.py:41 - Added 2 nodes from analysis.
+2026-01-08 23:43:20,743 - GVPA - INFO - code_graph_builder.py:56 - Added 1 edges from analysis.
+2026-01-08 23:43:20,744 - GVPA - INFO - code_graph_builder.py:163 - Graph generation completed. Nodes: 2, Edges: 1
+2026-01-08 23:43:45,216 - GVPA - INFO - code_graph_builder.py:17 - Starting graph layout generation...
+2026-01-08 23:43:45,216 - GVPA - INFO - code_graph_builder.py:41 - Added 2 nodes from analysis.
+2026-01-08 23:43:45,217 - GVPA - INFO - code_graph_builder.py:56 - Added 0 edges from analysis.
+2026-01-08 23:43:45,217 - GVPA - INFO - code_graph_builder.py:163 - Graph generation completed. Nodes: 2, Edges: 0
+2026-01-08 23:43:45,217 - GVPA - INFO - code_graph_builder.py:17 - Starting graph layout generation...
+2026-01-08 23:43:45,217 - GVPA - INFO - code_graph_builder.py:41 - Added 3 nodes from analysis.
+2026-01-08 23:43:45,218 - GVPA - INFO - code_graph_builder.py:56 - Added 1 edges from analysis.
+2026-01-08 23:43:45,218 - GVPA - INFO - code_graph_builder.py:163 - Graph generation completed. Nodes: 3, Edges: 1
+2026-01-08 23:43:45,218 - GVPA - INFO - code_graph_builder.py:17 - Starting graph layout generation...
+2026-01-08 23:43:45,218 - GVPA - INFO - code_graph_builder.py:41 - Added 2 nodes from analysis.
+2026-01-08 23:43:45,218 - GVPA - INFO - code_graph_builder.py:56 - Added 1 edges from analysis.
+2026-01-08 23:43:45,218 - GVPA - INFO - code_graph_builder.py:163 - Graph generation completed. Nodes: 2, Edges: 1
+2026-01-08 23:48:43,764 - GVPA - INFO - code_graph_builder.py:17 - Starting graph layout generation...
+2026-01-08 23:48:43,765 - GVPA - INFO - code_graph_builder.py:41 - Added 2 nodes from analysis.
+2026-01-08 23:48:43,765 - GVPA - INFO - code_graph_builder.py:56 - Added 0 edges from analysis.
+2026-01-08 23:48:43,766 - GVPA - INFO - code_graph_builder.py:163 - Graph generation completed. Nodes: 2, Edges: 0
+2026-01-08 23:48:43,767 - GVPA - INFO - code_graph_builder.py:17 - Starting graph layout generation...
+2026-01-08 23:48:43,767 - GVPA - INFO - code_graph_builder.py:41 - Added 3 nodes from analysis.
+2026-01-08 23:48:43,767 - GVPA - INFO - code_graph_builder.py:56 - Added 1 edges from analysis.
+2026-01-08 23:48:43,767 - GVPA - INFO - code_graph_builder.py:163 - Graph generation completed. Nodes: 3, Edges: 1
+2026-01-08 23:48:43,768 - GVPA - INFO - code_graph_builder.py:17 - Starting graph layout generation...
+2026-01-08 23:48:43,768 - GVPA - INFO - code_graph_builder.py:41 - Added 2 nodes from analysis.
+2026-01-08 23:48:43,768 - GVPA - INFO - code_graph_builder.py:56 - Added 1 edges from analysis.
+2026-01-08 23:48:43,769 - GVPA - INFO - code_graph_builder.py:163 - Graph generation completed. Nodes: 2, Edges: 1

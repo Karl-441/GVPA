@@ -1,0 +1,6 @@
+{
+    "name": "Line Plot",
+    "description": "Basic line plot using Matplotlib",
+    "parameters": ["x", "y", "title"],
+    "code": "import matplotlib.pyplot as plt\n\nx = {x}\ny = {y}\n\nplt.plot(x, y)\nplt.title('{title}')\nplt.show()"
+}

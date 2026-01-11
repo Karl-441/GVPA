@@ -1,0 +1,29 @@
+{
+    "app_title": "General Visual Programming Assistant (GVPA)",
+    "file": "File",
+    "open_project": "Open Project",
+    "exit": "Exit",
+    "tabs": {
+        "structure": "Structure & Logic",
+        "image": "Image Vis",
+        "data": "Data Vis",
+        "interactive": "Interactive Vis",
+        "visual_prog": "Visual Programming",
+        "code_viewer": "Code Viewer"
+    },
+    "buttons": {
+        "load_image": "Load & Show Image",
+        "gen_plot": "Generate Demo Data Plot",
+        "gen_inter": "Generate Interactive Plot"
+    },
+    "node_graph": {
+        "add_node": "Add Node",
+        "delete": "Delete",
+        "save": "Save Graph",
+        "load": "Load Graph"
+    },
+    "msg": {
+        "analyzing": "Analyzing file: {0}",
+        "no_graph": "No graphical structure available"
+    }
+}

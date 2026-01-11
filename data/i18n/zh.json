@@ -1,0 +1,29 @@
+{
+    "app_title": "通用可视化编程助手 (GVPA)",
+    "file": "文件",
+    "open_project": "打开项目",
+    "exit": "退出",
+    "tabs": {
+        "structure": "结构与逻辑",
+        "image": "图像可视化",
+        "data": "数据可视化",
+        "interactive": "交互式可视化",
+        "visual_prog": "可视化编程",
+        "code_viewer": "代码查看器"
+    },
+    "buttons": {
+        "load_image": "加载并显示图像",
+        "gen_plot": "生成演示数据图表",
+        "gen_inter": "生成交互式图表"
+    },
+    "node_graph": {
+        "add_node": "添加节点",
+        "delete": "删除",
+        "save": "保存图表",
+        "load": "加载图表"
+    },
+    "msg": {
+        "analyzing": "正在分析文件: {0}",
+        "no_graph": "无可用的图形结构"
+    }
+}

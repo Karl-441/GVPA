@@ -1,0 +1,33 @@
+[
+  {
+    "source": "FrontendA",
+    "target": "BackendB",
+    "type": "default",
+    "weight": 2,
+    "risk_level": "low",
+    "layer": "FRONTEND"
+  },
+  {
+    "source": "BackendB",
+    "target": "FrontendA",
+    "type": "default",
+    "weight": 1,
+    "risk_level": "high",
+    "layer": "LOCAL_SERVICE"
+  },
+  {
+    "source": "CycleA",
+    "target": "CycleB",
+    "type": "default"
+  },
+  {
+    "source": "CycleB",
+    "target": "CycleC",
+    "type": "default"
+  },
+  {
+    "source": "CycleC",
+    "target": "CycleA",
+    "type": "default"
+  }
+]
