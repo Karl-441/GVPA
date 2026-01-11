@@ -1,0 +1,12 @@
+{
+  "theme": "Tactical",
+  "visual_style": "minimal",
+  "language": "Chinese",
+  "auto_analyze": true,
+  "max_recursion_depth": 10,
+  "show_minimap": false,
+  "infinite_canvas": true,
+  "min_spacing": 30,
+  "number_decimals": 2,
+  "thousand_sep": true
+}

@@ -169,6 +169,18 @@ class NodeItem(QGraphicsItem):
             self.text_color = QColor(COLORS["text"])
             self.sub_text_color = QColor(COLORS["text_dim"])
 
+    def set_params(self, params):
+        self.params = params
+        self.update() # Trigger repaint to show updated info
+
+    def set_style(self, style):
+        """Apply custom style overrides from serialization"""
+        # For now, we can just store it or apply specific keys if needed
+        # e.g. self.width = style.get("width", self.width)
+        # But we primarily rely on Theme manager.
+        # This method exists to satisfy the deserializer contract.
+        pass
+
     def boundingRect(self):
         return QRectF(0, 0, self.width, self.height)
 
