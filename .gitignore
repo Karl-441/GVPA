@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Logs
+logs/
+*.log
+
+# IDEs
+.vscode/
+.idea/
+
+# Environment variables
+.env
+
+# Virtual Environments
+venv/
+.venv/
+env/
+
+# Build distributions
+build/
+dist/
+*.spec
+
+# Temporary/Autosave files
+autosave.json
