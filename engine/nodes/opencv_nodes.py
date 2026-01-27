@@ -1,175 +1,183 @@
 import cv2
 import numpy as np
 from utils.logger import logger
-
-class NodeRegistry:
-    _nodes = {}
-
-    @classmethod
-    def register(cls, node_type, node_class):
-        cls._nodes[node_type] = node_class
-
-    @classmethod
-    def create(cls, node_type, **kwargs):
-        node_class = cls._nodes.get(node_type)
-        if node_class:
-            return node_class(**kwargs)
-        # Fallback for dynamic nodes (Function/Method)
-        if node_type not in cls._nodes and "Function" in cls._nodes:
-             # If type matches a known function node convention, or we treat unknown as generic function
-             # For now, let's assume CodeGraphBuilder sets title to Function Name.
-             # But execution engine looks up by title.
-             # We can register a "GenericFunction" and use that if specific type not found?
-             # Better: ExecutionEngine should handle mapping.
-             # Here we return GenericFunctionNode if registered and type looks like a function name
-             return cls._nodes["GenericFunction"](**kwargs)
-        return None
-
-    @classmethod
-    def get_all_types(cls):
-        return list(cls._nodes.keys())
-
-class BaseNode:
-    def __init__(self, node_id, **kwargs):
-        self.id = node_id
-        self.inputs = {}  # socket_index -> data
-        self.params = kwargs.get("params", {})
-        self.outputs = {} # socket_index -> data
-
-    def set_input(self, index, data):
-        self.inputs[index] = data
-
-    def get_output(self, index):
-        return self.outputs.get(index)
-
-    def execute(self):
-        raise NotImplementedError
+from engine.base import BaseNode, NodeRegistry
 
 # --- Generic Python Function Node ---
 class GenericFunctionNode(BaseNode):
     """
     Executes a Python function dynamically.
-    Params: func_name, module_path (optional)
     """
-    def execute(self):
-        func_name = self.params.get("func_name")
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {
+            "required": {"input_data": ("ANY",)},
+            "optional": {"func_name": ("STRING", {"default": ""})}
+        }
+
+    @classmethod
+    def RETURN_TYPES(cls):
+        return ("ANY",)
+
+    def execute(self, input_data=None, func_name=""):
+        if not func_name:
+            # Fallback to params if not passed as input
+            func_name = self.params.get("func_name", "")
+            
         if not func_name:
             logger.warning(f"Node {self.id}: No function name specified")
-            return
+            return input_data
 
-        # In a real scenario, we would import the module dynamically.
-        # For this prototype, we mock execution or print trace.
         logger.info(f"Executing Generic Function: {func_name}")
-        
-        # Mock logic: Pass input 0 to output 0
-        input_data = self.inputs.get(0)
-        if input_data is not None:
-            self.outputs[0] = input_data
-            logger.info(f"  Passed data through {func_name}")
-        else:
-            self.outputs[0] = "Result from " + func_name
+        # Mock logic
+        return input_data
 
 # --- OpenCV Nodes ---
 
 class ImageReadNode(BaseNode):
-    """
-    Params: file_path
-    Outputs: 0: image
-    """
-    def execute(self):
-        path = self.params.get("file_path", "")
-        if not path:
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {
+            "required": {},
+            "optional": {"file_path": ("STRING", {"default": ""})}
+        }
+    
+    @classmethod
+    def RETURN_TYPES(cls):
+        return ("IMAGE",)
+
+    def execute(self, file_path=""):
+        if not file_path:
+             file_path = self.params.get("file_path", "")
+
+        if not file_path:
             logger.warning(f"Node {self.id}: No file path specified")
-            self.outputs[0] = None
-            return
+            return None
 
         try:
-            img = cv2.imread(path)
+            img = cv2.imread(file_path)
             if img is None:
-                logger.error(f"Node {self.id}: Failed to load image {path}")
-            self.outputs[0] = img
+                logger.error(f"Node {self.id}: Failed to load image {file_path}")
+            return img
         except Exception as e:
             logger.error(f"Node {self.id}: Error reading image: {e}")
-            self.outputs[0] = None
+            return None
 
 class CvtColorNode(BaseNode):
-    """
-    Inputs: 0: image
-    Params: code (e.g., cv2.COLOR_BGR2GRAY)
-    Outputs: 0: image
-    """
-    def execute(self):
-        img = self.inputs.get(0)
-        if img is None:
-            return
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {
+            "required": {"image": ("IMAGE",)},
+            "optional": {"code": ("INT", {"default": cv2.COLOR_BGR2GRAY})}
+        }
 
-        code = self.params.get("code", cv2.COLOR_BGR2GRAY)
+    @classmethod
+    def RETURN_TYPES(cls):
+        return ("IMAGE",)
+
+    def execute(self, image, code=cv2.COLOR_BGR2GRAY):
+        if image is None:
+            return None
+        
+        # Check if code is in params
+        if "code" in self.params:
+            code = self.params["code"]
+
         try:
-            # Handle string input for code if necessary, for now assume int or registered constant name
             if isinstance(code, str):
                 code = getattr(cv2, code, cv2.COLOR_BGR2GRAY)
             
-            res = cv2.cvtColor(img, int(code))
-            self.outputs[0] = res
+            res = cv2.cvtColor(image, int(code))
+            return res
         except Exception as e:
             logger.error(f"Node {self.id}: Convert color error: {e}")
+            return None
 
 class GaussianBlurNode(BaseNode):
-    """
-    Inputs: 0: image
-    Params: ksize (int, default 5)
-    Outputs: 0: image
-    """
-    def execute(self):
-        img = self.inputs.get(0)
-        if img is None:
-            return
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {
+            "required": {"image": ("IMAGE",)},
+            "optional": {"ksize": ("INT", {"default": 5})}
+        }
 
-        ksize = int(self.params.get("ksize", 5))
-        if ksize % 2 == 0: ksize += 1 # Ensure odd
+    @classmethod
+    def RETURN_TYPES(cls):
+        return ("IMAGE",)
+
+    def execute(self, image, ksize=5):
+        if image is None:
+            return None
+
+        if "ksize" in self.params:
+            ksize = int(self.params["ksize"])
+
+        if ksize % 2 == 0: ksize += 1
         
         try:
-            res = cv2.GaussianBlur(img, (ksize, ksize), 0)
-            self.outputs[0] = res
+            res = cv2.GaussianBlur(image, (ksize, ksize), 0)
+            return res
         except Exception as e:
             logger.error(f"Node {self.id}: Blur error: {e}")
+            return None
 
 class CannyNode(BaseNode):
-    """
-    Inputs: 0: image
-    Params: threshold1, threshold2
-    Outputs: 0: image
-    """
-    def execute(self):
-        img = self.inputs.get(0)
-        if img is None:
-            return
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {
+            "required": {"image": ("IMAGE",)},
+            "optional": {
+                "threshold1": ("FLOAT", {"default": 100}),
+                "threshold2": ("FLOAT", {"default": 200})
+            }
+        }
+
+    @classmethod
+    def RETURN_TYPES(cls):
+        return ("IMAGE",)
+
+    def execute(self, image, threshold1=100, threshold2=200):
+        if image is None:
+            return None
             
-        t1 = float(self.params.get("threshold1", 100))
-        t2 = float(self.params.get("threshold2", 200))
+        if "threshold1" in self.params:
+            threshold1 = float(self.params["threshold1"])
+        if "threshold2" in self.params:
+            threshold2 = float(self.params["threshold2"])
         
         try:
-            res = cv2.Canny(img, t1, t2)
-            self.outputs[0] = res
+            res = cv2.Canny(image, threshold1, threshold2)
+            return res
         except Exception as e:
             logger.error(f"Node {self.id}: Canny error: {e}")
+            return None
 
 class ImageShowNode(BaseNode):
-    """
-    Inputs: 0: image
-    Params: window_name
-    """
-    def execute(self):
-        img = self.inputs.get(0)
-        if img is None:
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {
+            "required": {"image": ("IMAGE",)},
+            "optional": {"window_name": ("STRING", {"default": "Result"})}
+        }
+    
+    @classmethod
+    def RETURN_TYPES(cls):
+        return ()
+
+    def execute(self, image, window_name="Result"):
+        if image is None:
             logger.warning(f"Node {self.id}: No input image to show")
             return
 
-        name = self.params.get("window_name", f"Result {self.id}")
+        if "window_name" in self.params:
+            window_name = self.params["window_name"]
+            
+        # Use generic name if default
+        if window_name == "Result":
+            window_name = f"Result {self.id}"
+
         try:
-            cv2.imshow(name, img)
-            # We rely on main loop or explicit waitKey elsewhere, 
-            # but for a quick tool, a small waitKey might be needed to refresh buffer
+            cv2.imshow(window_name, image)
             cv2.waitKey(1) 
         except Exception as e:
             logger.error(f"Node {self.id}: Show error: {e}")

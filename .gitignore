@@ -26,3 +26,6 @@ dist/
 
 # Temporary/Autosave files
 autosave.json
+OPTIMIZATION_REPORT.md
+.gitignore
+.gitignore

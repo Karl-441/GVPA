@@ -3,7 +3,7 @@ from PyQt6.QtWidgets import (QGraphicsScene, QGraphicsView, QWidget, QVBoxLayout
 from PyQt6.QtCore import Qt, QPoint, QLineF, QRectF, pyqtSignal
 from PyQt6.QtGui import QPainter, QColor, QTransform, QDrag, QFont
 from interface.gui.components.node_graph_items import NodeItem, NodeEdge, NodeSocket, COLORS
-from engine.nodes.opencv_nodes import NodeRegistry
+from engine.base import NodeRegistry
 import json
 import os
 from utils.logger import logger

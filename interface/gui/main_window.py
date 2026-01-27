@@ -677,11 +677,33 @@ class MainWindow(QMainWindow):
         self.save_graph() # Save before run
         data = self.node_graph.scene.serialize()
         logger.info("Starting graph execution...")
-        success = execution_engine.run_graph(data)
+        
+        self.btn_run_graph.setEnabled(False)
+        self.btn_run_graph.setText("Running...")
+        
+        # Use WorkerThread to run async engine
+        self.graph_runner_thread = WorkerThread(self._run_engine_wrapper, data)
+        self.graph_runner_thread.finished.connect(self.on_graph_execution_finished)
+        self.graph_runner_thread.error.connect(self.on_graph_execution_error)
+        self.graph_runner_thread.start()
+
+    def _run_engine_wrapper(self, data):
+        import asyncio
+        # Run async function in a new event loop
+        return asyncio.run(execution_engine.run_graph(data))
+
+    def on_graph_execution_finished(self, success):
+        self.btn_run_graph.setEnabled(True)
+        self.btn_run_graph.setText("Run Graph")
         if success:
             logger.info("Graph executed successfully.")
         else:
             logger.error("Graph execution failed.")
+
+    def on_graph_execution_error(self, err_msg):
+        self.btn_run_graph.setEnabled(True)
+        self.btn_run_graph.setText("Run Graph")
+        logger.error(f"Graph execution error: {err_msg}")
 
     # --- Vis Methods ---
     # Visualization methods removed as part of cleanup
